@@ -12,15 +12,15 @@ type Storage struct {
 }
 
 type Posts interface {
-	Create(context.Context) error
-	Update(context.Context) error
-	Delete(context.Context) error
+	Create(context.Context, *Post) error
+	Update(context.Context, *Post) error
+	Delete(context.Context, int64) error
 }
 
 type Users interface {
-	Create(context.Context) error
-	Update(context.Context) error
-	Delete(context.Context) error
+	Create(context.Context, *User) error
+	Update(context.Context, *User) error
+	Delete(context.Context, int64) error
 }
 
 type Comments interface {
@@ -31,8 +31,8 @@ type Comments interface {
 
 func NewPostgresStorage(db *sql.DB) Storage {
 	return Storage{
-		Posts:    &PostsStore{db: db},
-		Users:    &UsersStore{db: db},
-		Comments: &CommentsStore{db: db},
+		Posts:    &PostStore{db: db},
+		Users:    &UserStore{db: db},
+		Comments: &CommentStore{db: db},
 	}
 }
