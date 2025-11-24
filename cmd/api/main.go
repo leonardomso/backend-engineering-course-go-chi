@@ -11,7 +11,7 @@ func main() {
 	cfg := config{
 		addr: env.GetString("addr", ":8080"),
 		db: dbConfig{
-			addr:         env.GetString("DB_ADDR", "postgres://admin:adminpassword@localhost:5432/social"),
+			addr:         env.GetString("DB_ADDR", "postgres://social:adminpassword@localhost:5432/social?sslmode=disable"),
 			maxOpenConns: env.GetInt("DB_MAX_OPEN_CONNS", 10),
 			maxIdleConns: env.GetInt("DB_MAX_IDLE_CONNS", 5),
 			maxLifetime:  env.GetString("DB_MAX_LIFETIME", "10m"),
