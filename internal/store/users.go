@@ -6,11 +6,12 @@ import (
 )
 
 type User struct {
-	id         string
-	username   string
-	email      string
-	password   string
-	created_at string
+	ID        int64
+	Username  string
+	Email     string
+	Password  string
+	CreatedAt string
+	UpdatedAt string
 }
 
 type UserStore struct {
@@ -20,9 +21,9 @@ type UserStore struct {
 // Ideally we would use a ORM library to handle the SQL queries.
 // However, I'm doing this manually because the author is doing this manually for learning purposes.
 func (s *UserStore) Create(ctx context.Context, user *User) error {
-	query := `INSERT INTO users (id, username, email, password, created_at) VALUES ($1, $2, $3, $4, $5)`
+	query := `INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING id, created_at, updated_at`
 
-	err := s.db.QueryRowContext(ctx, query, user.id, user.username, user.email, user.password).Scan(&user.id, &user.created_at)
+	err := s.db.QueryRowContext(ctx, query, user.Username, user.Email, user.Password).Scan(&user.ID, &user.CreatedAt, &user.UpdatedAt)
 
 	if err != nil {
 		return err

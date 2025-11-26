@@ -7,6 +7,8 @@ import (
 	"test/internal/store"
 )
 
+const version = "0.0.1"
+
 func main() {
 	cfg := config{
 		addr: env.GetString("addr", ":8080"),
@@ -16,6 +18,7 @@ func main() {
 			maxIdleConns: env.GetInt("DB_MAX_IDLE_CONNS", 5),
 			maxLifetime:  env.GetString("DB_MAX_LIFETIME", "10m"),
 		},
+		env: env.GetString("ENV", "development"),
 	}
 
 	db, err := db.New(cfg.db.addr, cfg.db.maxOpenConns, cfg.db.maxIdleConns, cfg.db.maxLifetime)
