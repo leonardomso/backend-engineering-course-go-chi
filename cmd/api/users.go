@@ -22,7 +22,7 @@ type CreateUserPayload struct {
 func (app *application) createUserHandler(w http.ResponseWriter, r *http.Request) {
 	var payload CreateUserPayload
 	if err := readJSON(w, r, &payload); err != nil {
-		writeJSONError(w, http.StatusBadRequest, "Error parsing JSON")
+		app.internalServerError(w, r, err)
 		return
 	}
 
